@@ -74,7 +74,6 @@ func (s *server) Start(ctx context.Context) {
 	wg := &sync.WaitGroup{}
 	wg.Add(s.numWorkers)
 
-	// start a go routine for each of the workers that is specified
 	for id := 1; id <= s.numWorkers; id++ {
 		go s.worker(ctx, wg, id)
 	}
@@ -218,6 +217,6 @@ func (s *server) getAllItems() {
 			return true
 		})
 
-	print := fmt.Sprintf("total %d items: ", count, "items %v+", data)
+	print := fmt.Sprintf("\ntotal %d items :", count, data)
 	fmt.Println(print)
 }

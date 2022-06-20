@@ -44,19 +44,19 @@ func main() {
 	queue := queue.NewQueue(sess, configData.SQSUrl)
 	client := NewClient(queue)
 
-	s := promptui.Select{
-		Label: "Choose client option",
-		Items: []string{_addItem, _deleteItem, _getItem, _getAllItems},
-	}
-
-	var choice string
-	_, choice, err = s.Run()
-	if err != nil {
-		fmt.Println("failed to run promptui %s", err.Error())
-		return
-	}
-
 	for {
+		s := promptui.Select{
+			Label: "Choose client option",
+			Items: []string{_addItem, _deleteItem, _getItem, _getAllItems},
+		}
+
+		var choice string
+		_, choice, err = s.Run()
+		if err != nil {
+			fmt.Println("failed to run promptui %s", err.Error())
+			return
+		}
+
 		switch choice {
 		case _addItem:
 			fmt.Println("adding a new item on server")

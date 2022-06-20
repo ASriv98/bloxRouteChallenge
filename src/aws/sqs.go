@@ -10,8 +10,6 @@ import (
 	"github.com/aws/aws-sdk-go/service/sqs"
 )
 
-const _defaultTimeout = 1
-
 type SQS struct {
 	timeout time.Duration
 	client  *sqs.SQS
