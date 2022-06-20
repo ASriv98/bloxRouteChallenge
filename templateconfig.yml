@@ -1,0 +1,8 @@
+serverLogPath: "serverLog/"
+defaultLogPath: "defaultLogPath/"
+sqsURL: "mySQSURL"
+awsAccessKeyID: "myAWSAccessKey"
+awsSecretKeyID: "myAWSSecretKey"
+awsRegion: "us-east-1"
+serverIdleInterval: "100"
+numServerWorkers: "20"
