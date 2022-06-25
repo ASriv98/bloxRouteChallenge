@@ -58,5 +58,9 @@ func readConfig() (config.Data, error) {
 		return ret, errors.Wrap(err, "parsing config file")
 	}
 
+	if err = ret.IsConfigFileValid(); err != nil {
+		return ret, errors.Wrap(err, "is config file valid")
+	}
+
 	return ret, nil
 }
