@@ -95,7 +95,7 @@ func (s *server) worker(ctx context.Context, wg *sync.WaitGroup, id int) {
 
 		recv, handle, err := s.q.ReceiveMessage(ctx)
 		if err != nil {
-			s.l.Errorf("worker #%d errored : %w", id, err)
+			s.l.Errorf("worker #%d errored : %v", id, err)
 			time.Sleep(s.idleInterval)
 
 			continue
@@ -124,10 +124,10 @@ func (s *server) worker(ctx context.Context, wg *sync.WaitGroup, id int) {
 
 					err := s.processMessage(msg)
 					if err != nil {
-						s.l.Errorf("process queue message with id %v %v", msg.ID, err)
+						s.l.Errorf("process queue message with id %s %v", msg.ID, err)
 					}
 
-					s.l.Debugf("deleting message in queue post processing with id %v", msg.ID)
+					s.l.Debugf("deleting message in queue post processing with id %s", msg.ID)
 
 					defer func(q queue.Queue, ctx context.Context, handle *string) {
 						err := q.DeleteMessage(ctx, handle)
@@ -180,21 +180,21 @@ func (s *server) processMessage(msg data.Message) error {
 }
 
 func (s *server) addItem(data *data.Data) {
-	s.l.Infof("adding key %v with value %v to server", data.Key, data.Value)
+	s.l.Infof("adding key %s with value %v to server", data.Key, data.Value)
 	s.items.Store(data.Key, data.Value)
 	str := fmt.Sprintf("add %s = %s", data.Key, data.Value)
 	s.l.Infof(str)
 }
 
 func (s *server) deleteItem(key string) {
-	s.l.Infof("deleting item with key %v from server", key)
+	s.l.Infof("deleting item with key %s from server", key)
 	s.items.Delete(key)
 	str := fmt.Sprintf("delete %s", key)
 	s.l.Infof(str)
 }
 
 func (s *server) getItem(key string) {
-	s.l.Debugf("getting single item with key %v from server", key)
+	s.l.Debugf("getting single item with key %s from server", key)
 	item, ok := s.items.Load(key)
 	if !ok {
 		str := fmt.Sprintf("no item exists for key %s", key)
@@ -217,6 +217,6 @@ func (s *server) getAllItems() {
 			return true
 		})
 
-	print := fmt.Sprintf("\ntotal %d items :", count, data)
+	print := fmt.Sprintf("\ntotal %d items : %s", count, data)
 	fmt.Println(print)
 }
